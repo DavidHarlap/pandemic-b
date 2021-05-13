@@ -1,5 +1,6 @@
 #include "Board.hpp"
 #include <map>
+#include <set>
 
 using namespace std;
 using namespace pandemic;
@@ -30,7 +31,7 @@ map<City, set<City>> Board::neighbour = {{City::Algiers, {City::Madrid ,City::Pa
         {City::London  , {City::NewYork ,City::Madrid ,City::Essen ,City::Paris}},
         {City::LosAngeles  , {City::SanFrancisco ,City::Chicago ,City::MexicoCity ,City::Sydney}},
         {City::Madrid  , {City::London ,City::NewYork ,City::Paris ,City::SaoPaulo ,City::Algiers}},
-        {City::Manila  , {City::Taipei ,City::SanFrancisco ,City::HoChiMinhCity ,City::Sydney}},
+        {City::Manila  , {City::Taipei ,City::SanFrancisco ,City::HoChiMinhCity ,City::Sydney,City::HongKong }},
         {City::MexicoCity  , {City::LosAngeles ,City::Chicago ,City::Miami ,City::Lima ,City::Bogota}},
         {City::Miami  , {City::Atlanta ,City::MexicoCity ,City::Washington ,City::Bogota}},
         {City::Milan  , {City::Essen ,City::Paris ,City::Istanbul}},
@@ -71,7 +72,8 @@ map<City, Color> Board::disease_color = {{City::Algiers, Color::Black}, {City::A
         {City::StPetersburg, Color::Blue}, {City::Sydney, Color::Red}, {City::Taipei, Color::Red}, 
         {City::Tehran, Color::Black}, {City::Tokyo, Color::Red}, {City::Washington, Color::Blue}};
 
-map<City,int> disease_cubes =  {{City::Algiers, 0}, {City::Atlanta, 0}, {City::Baghdad, 0}, 
+Board::Board(){
+    map<City,int> disease_cubes =  {{City::Algiers, 0}, {City::Atlanta, 0}, {City::Baghdad, 0}, 
         {City::Bangkok, 0}, {City::Beijing, 0}, {City::Bogota, 0}, {City::BuenosAires, 0}, {City::Cairo, 0}, 
         {City::Chennai, 0}, {City::Chicago, 0}, {City::Delhi, 0}, {City::Essen, 0}, {City::HoChiMinhCity, 0}, 
         {City::HongKong, 0}, {City::Istanbul, 0}, {City::Jakarta, 0}, {City::Johannesburg, 0}, 
@@ -83,12 +85,16 @@ map<City,int> disease_cubes =  {{City::Algiers, 0}, {City::Atlanta, 0}, {City::B
         {City::Shanghai, 0}, {City::StPetersburg, 0}, {City::Sydney, 0}, {City::Taipei, 0}, {City::Tehran, 0}, 
         {City::Tokyo, 0}, {City::Washington, 0}};
 
-map<Color, bool> is_cure = {{Color::Blue , false},{Color::Yellow, false},{Color::Red, false},{Color::Black, false}};
-set<City> research_stations={};
+    map<Color, bool> is_cure = {{Color::Blue , false},{Color::Yellow, false},{Color::Red, false},{Color::Black, false}};
+    set<City> research_stations={};
 
-
-Board::Board(){ }
+ }
 const bool Board::is_clean(){
+    for(auto temp : City){
+        if(disease_cubes[temp]!= 0){
+            return false;
+        }
+    }
     return true;
 }
          
@@ -99,10 +105,53 @@ int& Board::operator[](City c){
     return disease_cubes[c];
 }
                 
-void Board::remove_cures(){ }
+void Board::remove_cures(){
+    is_cure[Color::Blue]= false;
+    is_cure[Color::Yellow]= false;
+    is_cure[Color::Red]= false;
+    is_cure[Color::Black]= false;
+}
+
+void remove_stations(){
+    research_stations.clear();
+}
 
 ostream& pandemic::operator<<(ostream& os, const Board& b){
     return os;
 }
+
+
+bool if_station(City c){
+    if(research_stations.count(c)==1){
+        return true;
+    }
+    return false;
+}
+
+bool add_station(City c){
+    if(research_stations.count(c)!=1){
+        research_stations.emplace(c);
+        return true;
+    }
+    return false;
+}
+
+
+Color get_color(City c){
+    Board::disease_color.at(c);
+}
+
+void find_cure(Color clr){
+    is_cure[clr]=true;
+}
+
+bool have_cure(Color clr){
+    is_cure[clr];
+}
+
+bool are_neighbors(City c1,City c2){
+    return neighbour.at(c1).contains(c2);
+}
+
 
    
