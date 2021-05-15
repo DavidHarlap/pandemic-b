@@ -11,7 +11,7 @@ namespace pandemic
     class Player
     {
     protected:
-        Board board;
+        Board& board;
         City currCity;
         std::set<City> cards;
         std::string type;
@@ -28,5 +28,9 @@ namespace pandemic
         Player &treat(City);
         Player &take_card(City);
         std::string role();
+        
+        bool throw_card(City, int clr=-1);
+        bool check_if_same_color(Color, int);
+        virtual void access_city();
     };
 }

@@ -10,4 +10,5 @@ class Medic : public Player
 public:
     Medic(Board, City);
     Medic& treat(City);
+    void access_city() override;
 };

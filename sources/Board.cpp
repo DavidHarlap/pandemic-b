@@ -4,6 +4,7 @@
 
 using namespace std;
 using namespace pandemic;
+//    for(int temp=(int)City::Algiers ;temp <=(int)City::Washington;temp++){
 
 map<City, set<City>> Board::neighbour = {{City::Algiers, {City::Madrid ,City::Paris,City::Istanbul ,City::Cairo }},
         {City::Atlanta , {City::Chicago ,City::Miami ,City::Washington}},
@@ -90,8 +91,8 @@ Board::Board(){
 
  }
 const bool Board::is_clean(){
-    for(auto temp : City){
-        if(disease_cubes[temp]!= 0){
+    for(auto& temp : this->disease_cubes){
+        if(temp.second != 0){
             return false;
         }
     }
@@ -112,7 +113,7 @@ void Board::remove_cures(){
     is_cure[Color::Black]= false;
 }
 
-void remove_stations(){
+void Board::remove_stations(){
     research_stations.clear();
 }
 
@@ -121,14 +122,14 @@ ostream& pandemic::operator<<(ostream& os, const Board& b){
 }
 
 
-bool if_station(City c){
+bool Board::if_station(City c){
     if(research_stations.count(c)==1){
         return true;
     }
     return false;
 }
 
-bool add_station(City c){
+bool Board::add_station(City c){
     if(research_stations.count(c)!=1){
         research_stations.emplace(c);
         return true;
@@ -136,21 +137,20 @@ bool add_station(City c){
     return false;
 }
 
-
-Color get_color(City c){
-    Board::disease_color.at(c);
+Color Board::get_color(City c){
+    return Board::disease_color.at(c);
 }
 
-void find_cure(Color clr){
+void Board::find_cure(Color clr){
     is_cure[clr]=true;
 }
 
-bool have_cure(Color clr){
-    is_cure[clr];
+bool Board::have_cure(Color clr){
+    return is_cure[clr];
 }
 
-bool are_neighbors(City c1,City c2){
-    return neighbour.at(c1).contains(c2);
+bool Board::are_neighbors(City c1,City c2){
+    return Board::neighbour.at(c1).contains(c2);
 }
 
 

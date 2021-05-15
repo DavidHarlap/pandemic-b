@@ -26,8 +26,7 @@ namespace pandemic
             void remove_cures();
             const int operator[](City c) const;
             int& operator[](City c);
-                   
-            friend std::ostream& operator<<(std::ostream& os, const Board& b);    
+            friend std::ostream& operator<<(std::ostream& os, const Board& b);
 
             bool if_station(City);
             bool add_station(City);
@@ -35,6 +34,7 @@ namespace pandemic
             void find_cure(Color);
             bool have_cure(Color);
             bool are_neighbors(City,City);
+            void remove_stations();
 
 
 
