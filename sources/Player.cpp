@@ -9,7 +9,7 @@
 using namespace std;
 using namespace pandemic;
 
-Player::Player(Board &b, City c,string str) : board(b),currCity(c),type(str){ }
+Player::Player(Board& b, City c,string str) : board(b),currCity(c),type(str){ }
 
 /*bool Player::throw_card(City c, int clr){
     if(cards.count(c)==0){
@@ -59,7 +59,7 @@ Player& Player::fly_charter(City c){
     return *this;
 }
 Player& Player::fly_shuttle(City c){
-    cout<< board.research_stations.size();
+    //cout<< board.research_stations.size();
     /*for(City s: board.research_stations){
         cout <<"yy "<< (int)s<<" ";
     }
@@ -87,7 +87,7 @@ Player& Player::build(){
         //std::cout<< "if in build in "<< (int)currCity<<endl;
         cards.erase(currCity);
         board.add_station(currCity);
-        std::cout<< boolalpha<< board.if_station(currCity)<<endl;
+        //std::cout<< boolalpha<< board.if_station(currCity)<<endl;
     }
     return *this;
 
@@ -172,6 +172,8 @@ std::string Player::role(){
 }
 
 void Player::remove_cards()
+
     {
+        cout<<"deleteeeeeeeeeeeeeeeeeeeeeeeee"<<endl;
         cards.clear();
     }

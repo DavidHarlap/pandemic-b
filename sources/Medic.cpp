@@ -2,7 +2,7 @@
 
 using namespace pandemic;
 
-Medic::Medic(Board b, City c) : Player(b, c,"Medic"){}
+Medic::Medic(Board& b, City c) : Player(b, c,"Medic"){}
     
 Medic& Medic::treat(City c){
     if(currCity!=c){

@@ -142,7 +142,8 @@ ostream& pandemic::operator<<(ostream& os, const Board& b){
 }
 
 void Board::add_station(City c){
-    research_stations.insert(c);    
+    research_stations.insert(c); 
+    //cout<< "size of station: "<< research_stations.size()<< endl;
 }
 
 Color Board::get_color(City c){

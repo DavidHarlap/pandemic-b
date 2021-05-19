@@ -10,6 +10,6 @@ class Scientist : public Player
 private:
     int n;
 public:
-    Scientist(Board, City,int);
+    Scientist(Board&, City,int);
     Scientist& discover_cure(Color)override;
 };

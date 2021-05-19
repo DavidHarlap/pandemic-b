@@ -21,7 +21,7 @@ namespace pandemic
             
         public:
             
-                        std::set<City> research_stations;
+            std::set<City> research_stations;
 
             
             
