@@ -11,5 +11,5 @@ private:
     int n;
 public:
     Scientist(Board, City,int);
-    Scientist& discover_cure(Color);
+    Scientist& discover_cure(Color)override;
 };

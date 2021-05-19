@@ -9,5 +9,5 @@ class FieldDoctor : public Player
 {
 public:
     FieldDoctor(Board, City);
-    FieldDoctor& treat(City);
+    FieldDoctor& treat(City) override;
 };

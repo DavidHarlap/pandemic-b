@@ -9,5 +9,5 @@ class GeneSplicer : public Player
 {
 public:
     GeneSplicer(Board, City);
-    GeneSplicer& discover_cure(Color);
+    GeneSplicer& discover_cure(Color) override;
 };

@@ -9,6 +9,6 @@ class OperationsExpert : public Player
 {
 public:
     OperationsExpert(Board, City);
-    OperationsExpert& build();
+    OperationsExpert& build()override;
     
 };

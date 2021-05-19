@@ -11,15 +11,19 @@ namespace pandemic
     class Board
     {
         private:
-            std::set<City> research_stations;
+            //std::set<City> research_stations;
             std::map<City,int> disease_cubes;
             std::map<Color, bool> is_cure;
+            std::map<City,bool> research_stations;
+            static std::map<City,Color> disease_color;
+            static std::map<City, std::set<City>> neighbour;
            // static std::map<City,Color> disease_color;
           //  static std::map<City, std::set<City>> neighbour;
             
         public:
-            static std::map<City,Color> disease_color;
-            static std::map<City, std::set<City>> neighbour;
+            
+
+            
             
             Board();
             const bool is_clean();

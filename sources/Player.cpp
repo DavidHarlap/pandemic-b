@@ -11,7 +11,7 @@ using namespace pandemic;
 
 Player::Player(Board &b, City c,string str) : board(b),currCity(c),type(str){ }
 
-bool Player::throw_card(City c, int clr){
+/*bool Player::throw_card(City c, int clr){
     if(cards.count(c)==0){
         throw ("you dont have the specific card");
     }
@@ -20,37 +20,42 @@ bool Player::throw_card(City c, int clr){
     }
     cards.erase(c);
     return true;
-}
+}*/
 
 void Player::access_city() {}
 
 
 Player& Player::drive(City c){
     if(!board.are_neighbors(currCity,c)){
-        throw invalid_argument("the city is not conected with curr city");                                                                                                                                                                                                                                       
+        throw ("the city is not conected with curr city");                                                                                                                                                                                                                                       
     }
     currCity=c;                                                                                   
     access_city();
     return *this;
 }
+
 Player& Player::fly_direct(City c){
     if(currCity == c){
         throw ("can't fly from city to itself");
     }
-    if(throw_card(c)){
-        currCity=c;
-        access_city();
+    if(cards.count(c)==0){
+        throw ("you dont have the specific card");
     }
+    cards.erase(c);
+    currCity=c;
+    access_city();
     return *this;
 }
 Player& Player::fly_charter(City c){
     if(currCity == c){
         throw ("can't fly from city to itself");
     }
-    if(throw_card(currCity)){
-        currCity=c;
-        access_city();
+    if(cards.count(currCity)==0){
+        throw ("you dont have the specific card");
     }
+    cards.erase(currCity);
+    currCity=c;
+    access_city();
     return *this;
 }
 Player& Player::fly_shuttle(City c){
@@ -63,17 +68,29 @@ Player& Player::fly_shuttle(City c){
     if(currCity == c){
         throw ("can't fly from city to itself");
     }
-    if(board.if_station(currCity) && board.if_station(c)){
-        currCity = c;
-        access_city();
-    }
-    else{
+    if(!board.if_station(currCity) || !board.if_station(c)){
         throw ("there no research station!");
     }
+    currCity = c;
+    access_city();
     return *this;
 }
+
+
 Player& Player::build(){
+ //   if(!board.if_station(currCity)){
+    if(cards.count(currCity)==0){
+        throw ("there no card!");
+    }
     if(!board.if_station(currCity)){
+        cards.erase(currCity);
+        board.add_station(currCity);
+    }
+    return *this;
+
+    
+        
+        /*
         try {
             if(throw_card(currCity)){
                 board.add_station(currCity);
@@ -83,9 +100,9 @@ Player& Player::build(){
         catch (string s) { 
             cout<<"can't build";
         }
-    }
-    return *this;
+   // }*/
 }
+
 bool Player::check_if_same_color(Color clr, int n){
     int count = 0;
     for(City c : cards){
@@ -95,23 +112,31 @@ bool Player::check_if_same_color(Color clr, int n){
     }
     return count>= n;
 }
+
 Player& Player::discover_cure(Color clr){
     if(board.have_cure(clr)){
         return *this;
     }
-    if(!board.if_station(currCity) || cards.size()<5 || check_if_same_color(clr,5)){
+    if(!board.if_station(currCity) || cards.size()<5 || !check_if_same_color(clr,5)){
         throw ("canot discover cure!");
     }
-    int count=0;
-    for(City c : cards){
-        if(count==5){ return *this; }
-        try{
-            if(throw_card(c,(int)clr)){
-                count= count+1;
-            }
+
+    board.find_cure(clr);
+
+
+    int count=5;
+    set<City> temp = cards;
+    auto it = cards.begin();
+    while (it != cards.end() && count > 0)
+    {
+        if (board.get_color(*it) == clr)
+        {
+            cards.erase(it++);
+            count--;
         }
-        catch(string s) { 
-            cout<< s;
+        else
+        {
+            ++it;
         }
     }
     return *this;
@@ -142,3 +167,8 @@ Player& Player::take_card(City c){
 std::string Player::role(){
     return type;
 }
+
+void Player::remove_cards()
+    {
+        cards.clear();
+    }

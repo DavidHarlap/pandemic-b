@@ -9,5 +9,5 @@ class Dispatcher : public Player
 {
 public:
     Dispatcher(Board, City);
-    Dispatcher& fly_direct(City);
+    Dispatcher& fly_direct(City) override;
 };

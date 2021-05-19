@@ -9,5 +9,5 @@ class Virologist : public Player
 {
 public:
     Virologist(Board, City);
-    Virologist& treat(City);
+    Virologist& treat(City)override;
 };

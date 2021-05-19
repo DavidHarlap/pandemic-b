@@ -19,18 +19,21 @@ namespace pandemic
     public:
         Player(Board &, City, std::string);
 
-        Player &drive(City);
-        Player &fly_direct(City);
-        Player &fly_charter(City);
-        Player &fly_shuttle(City);
-        Player &build();
-        Player &discover_cure(Color);
-        Player &treat(City);
-        Player &take_card(City);
+        virtual Player &drive(City);
+        virtual Player &fly_direct(City);
+        virtual Player &fly_charter(City);
+        virtual Player &fly_shuttle(City);
+        virtual Player &build();
+        virtual Player &discover_cure(Color);
+        virtual Player &treat(City);
+        virtual Player &take_card(City);
         std::string role();
         
         bool throw_card(City, int clr=-1);
         bool check_if_same_color(Color, int);
         virtual void access_city();
+
+        void remove_cards();
+    
     };
 }

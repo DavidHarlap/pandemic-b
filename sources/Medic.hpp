@@ -9,6 +9,6 @@ class Medic : public Player
 {
 public:
     Medic(Board, City);
-    Medic& treat(City);
+    Medic& treat(City)override;
     void access_city() override;
 };

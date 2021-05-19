@@ -87,7 +87,18 @@ Board::Board(){
         {City::Tokyo, 0}, {City::Washington, 0}};
 
     map<Color, bool> is_cure = {{Color::Blue , false},{Color::Yellow, false},{Color::Red, false},{Color::Black, false}};
-    set<City> research_stations={};
+    
+    map<City,bool> research_stations= {{City::Algiers, false}, {City::Atlanta, false}, {City::Baghdad, false}, 
+        {City::Bangkok, false}, {City::Beijing, false}, {City::Bogota, false}, {City::BuenosAires, false}, {City::Cairo, false}, 
+        {City::Chennai, false}, {City::Chicago, false}, {City::Delhi, false}, {City::Essen, false}, {City::HoChiMinhCity, false}, 
+        {City::HongKong, false}, {City::Istanbul, false}, {City::Jakarta, false}, {City::Johannesburg, false}, 
+        {City::Karachi, false}, {City::Khartoum, false}, {City::Kinshasa, false}, {City::Kolkata, false}, {City::Lagos, false}, 
+        {City::Lima, false}, {City::London, false}, {City::LosAngeles, false}, {City::Madrid, false}, {City::Manila, false}, 
+        {City::MexicoCity, false}, {City::Miami, false}, {City::Milan, false}, {City::Montreal, false}, {City::Moscow, false}, 
+        {City::Mumbai, false}, {City::NewYork, false}, {City::Osaka, false}, {City::Paris, false}, {City::Riyadh, false}, 
+        {City::SanFrancisco, false}, {City::Santiago, false}, {City::SaoPaulo, false}, {City::Seoul, false}, 
+        {City::Shanghai, false}, {City::StPetersburg, false}, {City::Sydney, false}, {City::Taipei, false}, {City::Tehran, false}, 
+        {City::Tokyo, false}, {City::Washington, false}};
 
  }
 const bool Board::is_clean(){
@@ -114,7 +125,9 @@ void Board::remove_cures(){
 }
 
 void Board::remove_stations(){
-    research_stations.clear();
+    for(int i = (int)City::Algiers; i <= (int)City::Washington; i++){
+        research_stations[(City)i]=false;
+    }
 }
 
 ostream& pandemic::operator<<(ostream& os, const Board& b){
@@ -122,19 +135,17 @@ ostream& pandemic::operator<<(ostream& os, const Board& b){
 }
 
 
-bool Board::if_station(City c){
-    if(research_stations.count(c)==1){
-        return true;
-    }
-    return false;
+ const bool Board::if_station(City c){
+    return research_stations[c];
 }
 
 bool Board::add_station(City c){
-    if(research_stations.count(c)!=1){
-        research_stations.emplace(c);
-        return true;
+    if(research_stations[c]){
+        return false;
     }
-    return false;
+    research_stations[c]= true;
+    return true;
+    
 }
 
 Color Board::get_color(City c){

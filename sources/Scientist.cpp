@@ -10,19 +10,26 @@ Scientist& Scientist::discover_cure(Color clr){
    if(board.have_cure(clr)){
         return *this;
     }
-    if(!board.if_station(currCity) || cards.size()<n || Player::check_if_same_color(clr,n)){
+    if(!board.if_station(currCity) || cards.size()<n || !check_if_same_color(clr,n)){
         throw ("canot discover cure!");
     }
-    int count=0;
-    for(City c : cards){
-        if(count==5){ return *this; }
-        try{
-            if(Player::throw_card(c,(int)clr)){
-                count= count+1;
-            }
+
+    board.find_cure(clr);
+
+
+    int count=n;
+    set<City> temp = cards;
+    auto it = cards.begin();
+    while (it != cards.end() && count > 0)
+    {
+        if (board.get_color(*it) == clr)
+        {
+            cards.erase(it++);
+            count--;
         }
-        catch(string s) { 
-            cout<< s;
+        else
+        {
+            ++it;
         }
     }
     return *this;

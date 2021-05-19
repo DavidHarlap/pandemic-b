@@ -9,5 +9,5 @@ class Researcher : public Player
 {
 public:
     Researcher(Board, City);
-    Researcher& discover_cure(Color);
+    Researcher& discover_cure(Color)override ;
 };
