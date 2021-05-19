@@ -101,7 +101,7 @@ Board::Board(){
         {City::Tokyo, false}, {City::Washington, false}};
 */
  }
-const bool Board::is_clean(){
+bool Board::is_clean(){
     for(auto& temp : this->disease_cubes){
         if(temp.second != 0){
             return false;
@@ -110,9 +110,9 @@ const bool Board::is_clean(){
     return true;
 }
          
-const int Board::operator[](City c) const{
+/*int Board::operator[](City c) const{
     return disease_cubes.at(c);
-}
+}*/
 int& Board::operator[](City c){
     return disease_cubes[c];
 }
@@ -136,7 +136,7 @@ ostream& pandemic::operator<<(ostream& os, const Board& b){
 }
 
 
- bool Board::if_station(City c){
+ bool Board::if_station(City c) const{
     //return research_stations[c];
     return research_stations.count(c)==1;
 }

@@ -26,18 +26,18 @@ namespace pandemic
             
             
             Board();
-            const bool is_clean();
+            bool is_clean();
             void remove_cures();
-            const int operator[](City c) const;
+            //const int operator[](City c) const;
             int& operator[](City c);
             friend std::ostream& operator<<(std::ostream& os, const Board& b);
 
-            bool if_station(City);
+            bool if_station(City)const;
             void add_station(City);
-            Color get_color(City);
+            static Color get_color(City);
             void find_cure(Color);
             bool have_cure(Color);
-            bool are_neighbors(City,City);
+            static bool are_neighbors(City,City);
             void remove_stations();
 
 

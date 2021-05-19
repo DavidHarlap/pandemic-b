@@ -16,7 +16,7 @@ Medic& Medic::treat(City c){
 }
 
 void Medic::access_city() {
-    if(board.have_cure(board.get_color(currCity))){
+    if(board.have_cure(Board::get_color(currCity))){
         board[currCity]=0;
     }
 }

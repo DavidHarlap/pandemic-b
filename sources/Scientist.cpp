@@ -22,7 +22,7 @@ Scientist& Scientist::discover_cure(Color clr){
     auto it = cards.begin();
     while (it != cards.end() && count > 0)
     {
-        if (board.get_color(*it) == clr)
+        if (Board::get_color(*it) == clr)
         {
             cards.erase(it++);
             count--;

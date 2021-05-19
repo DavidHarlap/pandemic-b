@@ -8,8 +8,10 @@
 
 using namespace std;
 using namespace pandemic;
+const int MUM_CARD_TO_THROW =5;
 
-Player::Player(Board& b, City c,string str) : board(b),currCity(c),type(str){ }
+
+Player::Player(Board& b, City c,string str) : board(b),currCity(c),type(std::move(str)){ }
 
 /*bool Player::throw_card(City c, int clr){
     if(cards.count(c)==0){
@@ -26,7 +28,7 @@ void Player::access_city() {}
 
 
 Player& Player::drive(City c){
-    if(!board.are_neighbors(currCity,c)){
+    if(!Board::are_neighbors(currCity,c)){
         throw ("the city is not conected with curr city");                                                                                                                                                                                                                                       
     }
     currCity=c;                                                                                   
@@ -109,7 +111,7 @@ Player& Player::build(){
 bool Player::check_if_same_color(Color clr, int n){
     int count = 0;
     for(City c : cards){
-        if(board.get_color(c)==clr){
+        if(Board::get_color(c)==clr){
             count= count+1;
         }
     }
@@ -120,19 +122,20 @@ Player& Player::discover_cure(Color clr){
     if(board.have_cure(clr)){
         return *this;
     }
-    if(!board.if_station(currCity) || cards.size()<5 || !check_if_same_color(clr,5)){
+    if(!board.if_station(currCity) || cards.size()<MUM_CARD_TO_THROW || !check_if_same_color(clr,MUM_CARD_TO_THROW)){
         throw ("canot discover cure!");
     }
 
     board.find_cure(clr);
 
 
-    int count=5;
+    int count=MUM_CARD_TO_THROW;
+;
     set<City> temp = cards;
     auto it = cards.begin();
     while (it != cards.end() && count > 0)
     {
-        if (board.get_color(*it) == clr)
+        if (Board::get_color(*it) == clr)
         {
             cards.erase(it++);
             count--;
@@ -152,7 +155,7 @@ Player& Player::treat(City c){
     if(board[c]==0){
         throw ("can't treat nothing!");
     }
-    if(board.have_cure(board.get_color(c))){
+    if(board.have_cure(Board::get_color(c))){
         board[c]=0;
     }
     else{

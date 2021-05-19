@@ -1,5 +1,6 @@
 #include "Researcher.hpp"
 #include <iostream>
+const int MUM_CARD_TO_THROW =5;
 
 using namespace pandemic;
 
@@ -9,18 +10,18 @@ Researcher& Researcher::discover_cure(Color clr){
    if(board.have_cure(clr)){
         return *this;
     }
-    if(cards.size()<5 || !check_if_same_color(clr,5)){
+    if(cards.size()<MUM_CARD_TO_THROW || !check_if_same_color(clr,MUM_CARD_TO_THROW)){
         throw ("canot discover cure!");
     }
 
     board.find_cure(clr);
 
-    int count=5;
+    int count=MUM_CARD_TO_THROW;
     std::set<City> temp = cards;
     auto it = cards.begin();
     while (it != cards.end() && count > 0)
     {
-        if (board.get_color(*it) == clr)
+        if (Board::get_color(*it) == clr)
         {
             cards.erase(it++);
             count--;
