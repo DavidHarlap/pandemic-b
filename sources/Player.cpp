@@ -15,7 +15,7 @@ bool Player::throw_card(City c, int clr){
     if(cards.count(c)==0){
         throw ("you dont have the specific card");
     }
-    if(clr>=0 && clr!= (int)Board::disease_color[c]){
+    if(clr>=0 && clr!= board[c]){
         throw ("the card color dont mach");
     }
     cards.erase(c);
@@ -26,7 +26,7 @@ void Player::access_city() {}
 
 
 Player& Player::drive(City c){
-    if(board.are_neighbors(currCity,c)){
+    if(!board.are_neighbors(currCity,c)){
         throw invalid_argument("the city is not conected with curr city");                                                                                                                                                                                                                                       
     }
     currCity=c;                                                                                   
@@ -34,6 +34,9 @@ Player& Player::drive(City c){
     return *this;
 }
 Player& Player::fly_direct(City c){
+    if(currCity == c){
+        throw ("can't fly from city to itself");
+    }
     if(throw_card(c)){
         currCity=c;
         access_city();
@@ -41,6 +44,9 @@ Player& Player::fly_direct(City c){
     return *this;
 }
 Player& Player::fly_charter(City c){
+    if(currCity == c){
+        throw ("can't fly from city to itself");
+    }
     if(throw_card(currCity)){
         currCity=c;
         access_city();
@@ -48,9 +54,21 @@ Player& Player::fly_charter(City c){
     return *this;
 }
 Player& Player::fly_shuttle(City c){
+    /*cout<< board.research_stations.size();
+    for(City s: board.research_stations){
+        cout <<"yy "<< (int)s<<" ";
+    }
+    cout<< endl;
+    cout << "c is:" <<(int)c<< endl<<endl;*/
+    if(currCity == c){
+        throw ("can't fly from city to itself");
+    }
     if(board.if_station(currCity) && board.if_station(c)){
         currCity = c;
         access_city();
+    }
+    else{
+        throw ("there no research station!");
     }
     return *this;
 }
@@ -59,6 +77,7 @@ Player& Player::build(){
         try {
             if(throw_card(currCity)){
                 board.add_station(currCity);
+                std::cout << "build";
             }
         }
         catch (string s) { 
@@ -109,14 +128,14 @@ Player& Player::treat(City c){
         board[c]=0;
     }
     else{
-        board[c]=board[c]-1;
+        board[c]--;;
     }
     return *this;
 }
 
 Player& Player::take_card(City c){
     //if(cards.count(c)==0){
-    cards.emplace(c);
+    cards.insert(c);
 //}
     return *this;
 }
