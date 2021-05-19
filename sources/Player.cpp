@@ -59,8 +59,8 @@ Player& Player::fly_charter(City c){
     return *this;
 }
 Player& Player::fly_shuttle(City c){
-    /*cout<< board.research_stations.size();
-    for(City s: board.research_stations){
+    cout<< board.research_stations.size();
+    /*for(City s: board.research_stations){
         cout <<"yy "<< (int)s<<" ";
     }
     cout<< endl;
@@ -71,8 +71,9 @@ Player& Player::fly_shuttle(City c){
     if(!board.if_station(currCity) || !board.if_station(c)){
         throw ("there no research station!");
     }
-    currCity = c;
-    access_city();
+        currCity = c;
+        access_city();
+    
     return *this;
 }
 
@@ -83,8 +84,10 @@ Player& Player::build(){
         throw ("there no card!");
     }
     if(!board.if_station(currCity)){
+        //std::cout<< "if in build in "<< (int)currCity<<endl;
         cards.erase(currCity);
         board.add_station(currCity);
+        std::cout<< boolalpha<< board.if_station(currCity)<<endl;
     }
     return *this;
 

@@ -15,7 +15,7 @@ GeneSplicer& GeneSplicer::discover_cure(Color clr){
     board.find_cure(clr);
 
     int count=5;
-    set<City> temp = cards;
+    std::set<City> temp = cards;
     auto it = cards.begin();
     while (it != cards.end() && count > 0)
     {

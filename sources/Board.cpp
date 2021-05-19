@@ -87,8 +87,8 @@ Board::Board(){
         {City::Tokyo, 0}, {City::Washington, 0}};
 
     map<Color, bool> is_cure = {{Color::Blue , false},{Color::Yellow, false},{Color::Red, false},{Color::Black, false}};
-    
-    map<City,bool> research_stations= {{City::Algiers, false}, {City::Atlanta, false}, {City::Baghdad, false}, 
+   
+    /*map<City,bool> research_stations= {{City::Algiers, false}, {City::Atlanta, false}, {City::Baghdad, false}, 
         {City::Bangkok, false}, {City::Beijing, false}, {City::Bogota, false}, {City::BuenosAires, false}, {City::Cairo, false}, 
         {City::Chennai, false}, {City::Chicago, false}, {City::Delhi, false}, {City::Essen, false}, {City::HoChiMinhCity, false}, 
         {City::HongKong, false}, {City::Istanbul, false}, {City::Jakarta, false}, {City::Johannesburg, false}, 
@@ -99,7 +99,7 @@ Board::Board(){
         {City::SanFrancisco, false}, {City::Santiago, false}, {City::SaoPaulo, false}, {City::Seoul, false}, 
         {City::Shanghai, false}, {City::StPetersburg, false}, {City::Sydney, false}, {City::Taipei, false}, {City::Tehran, false}, 
         {City::Tokyo, false}, {City::Washington, false}};
-
+*/
  }
 const bool Board::is_clean(){
     for(auto& temp : this->disease_cubes){
@@ -125,9 +125,10 @@ void Board::remove_cures(){
 }
 
 void Board::remove_stations(){
-    for(int i = (int)City::Algiers; i <= (int)City::Washington; i++){
+    research_stations.clear();
+    /*for(int i = (int)City::Algiers; i <= (int)City::Washington; i++){
         research_stations[(City)i]=false;
-    }
+    }*/
 }
 
 ostream& pandemic::operator<<(ostream& os, const Board& b){
@@ -135,17 +136,13 @@ ostream& pandemic::operator<<(ostream& os, const Board& b){
 }
 
 
- const bool Board::if_station(City c){
-    return research_stations[c];
+ bool Board::if_station(City c){
+    //return research_stations[c];
+    return research_stations.count(c)==1;
 }
 
-bool Board::add_station(City c){
-    if(research_stations[c]){
-        return false;
-    }
-    research_stations[c]= true;
-    return true;
-    
+void Board::add_station(City c){
+    research_stations.insert(c);    
 }
 
 Color Board::get_color(City c){
